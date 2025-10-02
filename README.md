@@ -1,6 +1,8 @@
 # Asset Management System
-
 A complete enterprise Asset Management System built with .NET 8, Blazor Server, and SQL Server.
+
+Sample Deployed URL : 
+https://assetmanagement-rohit-2025-bke0emeqaafefhfg.canadacentral-01.azurewebsites.net/
 
 ## Features
 
