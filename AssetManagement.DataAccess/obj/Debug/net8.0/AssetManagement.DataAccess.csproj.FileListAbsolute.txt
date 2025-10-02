@@ -9,6 +9,7 @@ C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\Asset
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.AssemblyInfoInputs.cache
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.AssemblyInfo.cs
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.csproj.CoreCompileInputs.cache
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.sourcelink.json
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetMan.BCD29E66.Up2Date
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.dll
 C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\refint\AssetManagement.DataAccess.dll

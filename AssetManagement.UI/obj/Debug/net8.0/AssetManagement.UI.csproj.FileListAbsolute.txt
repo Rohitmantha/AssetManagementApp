@@ -1,7 +1,6 @@
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\appsettings.Development.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\appsettings.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\AssetManagement.UI.staticwebassets.runtime.json
-C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\Data\app.db
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\AssetManagement.UI.exe
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\AssetManagement.UI.deps.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\bin\Debug\net8.0\AssetManagement.UI.runtimeconfig.json
@@ -260,6 +259,7 @@ C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\AssetManageme
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\AssetManagement.UI.AssemblyInfo.cs
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\AssetManagement.UI.csproj.CoreCompileInputs.cache
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\AssetManagement.UI.MvcApplicationPartsAssemblyInfo.cache
+C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\AssetManagement.UI.sourcelink.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\staticwebassets.build.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\staticwebassets.development.json
 C:\Projects\AssetManagementApp\AssetManagement.UI\obj\Debug\net8.0\staticwebassets\msbuild.AssetManagement.UI.Microsoft.AspNetCore.StaticWebAssets.props

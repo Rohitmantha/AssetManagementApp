@@ -1,0 +1,120 @@
+@page "/assignments/assign"
+@rendermode InteractiveServer
+@using AssetManagement.Business.Interfaces
+@using AssetManagement.Models
+@inject IAssetAssignmentService AssignmentService
+@inject IAssetService AssetService
+@inject IEmployeeService EmployeeService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<PageTitle>Assign Asset - Asset Management</PageTitle>
+
+<h3>Assign Asset to Employee</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="model" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+
+                    <div class="mb-3">
+                        <label for="assetId" class="form-label">Select Asset *</label>
+                        <InputSelect id="assetId" class="form-control" @bind-Value="model.AssetId">
+                            <option value="0">-- Select Asset --</option>
+                            @if (availableAssets != null)
+                            {
+                                @foreach (var asset in availableAssets)
+                                {
+                                    <option value="@asset.AssetId">@asset.AssetName (@asset.SerialNumber)</option>
+                                }
+                            }
+                        </InputSelect>
+                        @if (model.AssetId == 0)
+                        {
+                            <small class="text-danger">Please select an asset</small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="employeeId" class="form-label">Select Employee *</label>
+                        <InputSelect id="employeeId" class="form-control" @bind-Value="model.EmployeeId">
+                            <option value="0">-- Select Employee --</option>
+                            @if (employees != null)
+                            {
+                                @foreach (var employee in employees)
+                                {
+                                    <option value="@employee.EmployeeId">@employee.FullName (@employee.Department)</option>
+                                }
+                            }
+                        </InputSelect>
+                        @if (model.EmployeeId == 0)
+                        {
+                            <small class="text-danger">Please select an employee</small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes (Optional)</label>
+                        <InputTextArea id="notes" class="form-control" rows="3" @bind-Value="model.Notes" placeholder="Any additional notes about this assignment..." />
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary" disabled="@(!IsValid)">
+                            <i class="bi bi-check-circle"></i> Assign
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private AssignmentModel model = new AssignmentModel();
+    private List<Asset>? availableAssets;
+    private List<Employee>? employees;
+
+    private bool IsValid => model.AssetId > 0 && model.EmployeeId > 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var assetsResult = await AssetService.GetAvailableAssetsAsync();
+        availableAssets = assetsResult.ToList();
+
+        var employeesResult = await EmployeeService.GetAllEmployeesAsync();
+        employees = employeesResult.Where(e => e.Status == EmployeeStatus.Active).ToList();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (!IsValid) return;
+
+        try
+        {
+            await AssignmentService.AssignAssetAsync(model.AssetId, model.EmployeeId, model.Notes ?? string.Empty);
+            NavigationManager.NavigateTo("/assignments");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error assigning asset: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/assignments");
+    }
+
+    private class AssignmentModel
+    {
+        public int AssetId { get; set; }
+        public int EmployeeId { get; set; }
+        public string? Notes { get; set; }
+    }
+}

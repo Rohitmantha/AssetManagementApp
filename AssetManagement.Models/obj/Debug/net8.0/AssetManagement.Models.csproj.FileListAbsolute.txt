@@ -5,6 +5,7 @@ C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetMana
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.AssemblyInfoInputs.cache
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.AssemblyInfo.cs
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.csproj.CoreCompileInputs.cache
+C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.sourcelink.json
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.dll
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\refint\AssetManagement.Models.dll
 C:\Projects\AssetManagementApp\AssetManagement.Models\obj\Debug\net8.0\AssetManagement.Models.pdb

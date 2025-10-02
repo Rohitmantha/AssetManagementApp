@@ -1,0 +1,137 @@
+@page "/"
+@page "/dashboard"
+@rendermode InteractiveServer
+@using AssetManagement.Business.Interfaces
+@inject IDashboardService DashboardService
+@attribute [Authorize]
+
+<PageTitle>Dashboard - Asset Management</PageTitle>
+
+<h3>Asset Management Dashboard</h3>
+
+<div class="row mt-4">
+    <!-- Total Assets Widget -->
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Assets</h5>
+                <h2 class="card-text">@totalAssets</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Assets Widget -->
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Available</h5>
+                <h2 class="card-text">@availableAssets</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assigned Assets Widget -->
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Assigned</h5>
+                <h2 class="card-text">@assignedAssets</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Under Repair Widget -->
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Under Repair</h5>
+                <h2 class="card-text">@underRepair</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Retired Assets Widget -->
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-secondary">
+            <div class="card-body">
+                <h5 class="card-title">Retired</h5>
+                <h2 class="card-text">@retired</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spare Assets Widget -->
+    <div class="col-md-4 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Spare Assets</h5>
+                <h2 class="card-text">@spareAssets</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assets by Type -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Assets by Type</h5>
+            </div>
+            <div class="card-body">
+                @if (assetsByType != null && assetsByType.Any())
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Asset Type</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in assetsByType)
+                            {
+                                <tr>
+                                    <td>@item.Key</td>
+                                    <td><span class="badge bg-primary">@item.Value</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No assets found.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int totalAssets;
+    private int availableAssets;
+    private int assignedAssets;
+    private int underRepair;
+    private int retired;
+    private int spareAssets;
+    private Dictionary<string, int>? assetsByType;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDashboardData();
+    }
+
+    private async Task LoadDashboardData()
+    {
+        totalAssets = await DashboardService.GetTotalAssetsAsync();
+        availableAssets = await DashboardService.GetAvailableAssetsAsync();
+        assignedAssets = await DashboardService.GetAssignedAssetsAsync();
+        underRepair = await DashboardService.GetUnderRepairAsync();
+        retired = await DashboardService.GetRetiredAsync();
+        spareAssets = await DashboardService.GetSpareAssetsAsync();
+        assetsByType = await DashboardService.GetAssetsByTypeAsync();
+    }
+}

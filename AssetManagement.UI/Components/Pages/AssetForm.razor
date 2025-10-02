@@ -1,0 +1,155 @@
+@page "/assets/add"
+@page "/assets/edit/{id:int}"
+@rendermode InteractiveServer
+@using AssetManagement.Business.Interfaces
+@using AssetManagement.Models
+@inject IAssetService AssetService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<PageTitle>@pageTitle - Asset Management</PageTitle>
+
+<h3>@pageTitle</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="asset" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="assetName" class="form-label">Asset Name *</label>
+                            <InputText id="assetName" class="form-control" @bind-Value="asset.AssetName" />
+                            <ValidationMessage For="@(() => asset.AssetName)" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="assetType" class="form-label">Asset Type *</label>
+                            <InputText id="assetType" class="form-control" @bind-Value="asset.AssetType" placeholder="e.g., Laptop, Monitor, Phone" />
+                            <ValidationMessage For="@(() => asset.AssetType)" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="makeModel" class="form-label">Make/Model</label>
+                            <InputText id="makeModel" class="form-control" @bind-Value="asset.MakeModel" placeholder="e.g., Dell XPS 15" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="serialNumber" class="form-label">Serial Number *</label>
+                            <InputText id="serialNumber" class="form-control" @bind-Value="asset.SerialNumber" />
+                            <ValidationMessage For="@(() => asset.SerialNumber)" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="purchaseDate" class="form-label">Purchase Date</label>
+                            <InputDate id="purchaseDate" class="form-control" @bind-Value="asset.PurchaseDate" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="warrantyDate" class="form-label">Warranty Expiry Date</label>
+                            <InputDate id="warrantyDate" class="form-control" @bind-Value="asset.WarrantyExpiryDate" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="condition" class="form-label">Condition</label>
+                            <InputSelect id="condition" class="form-control" @bind-Value="asset.Condition">
+                                <option value="@AssetCondition.New">New</option>
+                                <option value="@AssetCondition.Good">Good</option>
+                                <option value="@AssetCondition.NeedsRepair">Needs Repair</option>
+                                <option value="@AssetCondition.Damaged">Damaged</option>
+                            </InputSelect>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <InputSelect id="status" class="form-control" @bind-Value="asset.Status">
+                                <option value="@AssetStatus.Available">Available</option>
+                                <option value="@AssetStatus.Assigned">Assigned</option>
+                                <option value="@AssetStatus.UnderRepair">Under Repair</option>
+                                <option value="@AssetStatus.Retired">Retired</option>
+                            </InputSelect>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="isSpare" class="form-label">Is Spare?</label>
+                            <InputCheckbox id="isSpare" class="form-check-input" @bind-Value="asset.IsSpare" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="specifications" class="form-label">Specifications / Details</label>
+                        <InputTextArea id="specifications" class="form-control" rows="3" @bind-Value="asset.Specifications" placeholder="Additional details about the asset..." />
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Save
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    private Asset asset = new Asset();
+    private string pageTitle = "Add Asset";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id.HasValue)
+        {
+            pageTitle = "Edit Asset";
+            var existing = await AssetService.GetAssetByIdAsync(Id.Value);
+            if (existing != null)
+            {
+                asset = existing;
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/assets");
+            }
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            if (Id.HasValue)
+            {
+                await AssetService.UpdateAssetAsync(asset);
+            }
+            else
+            {
+                await AssetService.CreateAssetAsync(asset);
+            }
+            NavigationManager.NavigateTo("/assets");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving asset: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/assets");
+    }
+}

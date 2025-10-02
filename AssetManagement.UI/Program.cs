@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AssetManagement.UI.Components;
 using AssetManagement.UI.Components.Account;
-using AssetManagement.UI.Data;
+
 using AssetManagement.DataAccess.Data;
-
-
 using AssetManagement.Business.Interfaces;
 using AssetManagement.Business.Services;
 using AssetManagement.DataAccess.Interfaces;
@@ -36,27 +34,27 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<IdentityUser>, IdentityNoOpEmailSender>();
 
-var app = builder.Build();
-
-
-// Register Repositories
+// Register Repositories - MOVED BEFORE var app = builder.Build()
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<IAssetAssignmentRepository, AssetAssignmentRepository>();
 builder.Services.AddScoped<IDapperRepository, DapperRepository>();
 
-// Register Services
+// Register Services - MOVED BEFORE var app = builder.Build()
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAssetService, AssetService>();
 builder.Services.AddScoped<IAssetAssignmentService, AssetAssignmentService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+
+// THIS LINE MUST COME AFTER ALL SERVICE REGISTRATIONS
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

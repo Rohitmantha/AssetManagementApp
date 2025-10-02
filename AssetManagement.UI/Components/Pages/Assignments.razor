@@ -1,0 +1,119 @@
+@page "/assignments"
+@rendermode InteractiveServer
+@using AssetManagement.Business.Interfaces
+@using AssetManagement.Models
+@inject IAssetAssignmentService AssignmentService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<PageTitle>Assignments - Asset Management</PageTitle>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Asset Assignments</h3>
+    <button class="btn btn-primary" @onclick="NavigateToAssign">
+        <i class="bi bi-arrow-right-circle"></i> New Assignment
+    </button>
+</div>
+
+@if (assignments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!assignments.Any())
+{
+    <div class="alert alert-info">No assignments found.</div>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset</th>
+                        <th>Employee</th>
+                        <th>Assigned Date</th>
+                        <th>Returned Date</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assignment in assignments)
+                    {
+                        <tr>
+                            <td>@assignment.AssignmentId</td>
+                            <td>@assignment.Asset?.AssetName</td>
+                            <td>@assignment.Employee?.FullName</td>
+                            <td>@assignment.AssignedDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (assignment.ReturnedDate.HasValue)
+                                {
+                                    @assignment.ReturnedDate.Value.ToString("dd MMM yyyy")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>
+                                @if (assignment.ReturnedDate.HasValue)
+                                {
+                                    <span class="badge bg-secondary">Returned</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
+                            <td>@(string.IsNullOrEmpty(assignment.Notes) ? "-" : assignment.Notes)</td>
+                            <td>
+                                @if (!assignment.ReturnedDate.HasValue)
+                                {
+                                    <button class="btn btn-sm btn-warning" @onclick="() => ReturnAsset(assignment.AssignmentId)">
+                                        <i class="bi bi-arrow-return-left"></i> Return
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@code {
+    private List<AssetAssignment>? assignments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAssignments();
+    }
+
+    private async Task LoadAssignments()
+    {
+        var result = await AssignmentService.GetAllAssignmentsAsync();
+        assignments = result.ToList();
+    }
+
+    private void NavigateToAssign()
+    {
+        NavigationManager.NavigateTo("/assignments/assign");
+    }
+
+    private async Task ReturnAsset(int assignmentId)
+    {
+        try
+        {
+            await AssignmentService.ReturnAssetAsync(assignmentId);
+            await LoadAssignments();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error returning asset: {ex.Message}");
+        }
+    }
+}
