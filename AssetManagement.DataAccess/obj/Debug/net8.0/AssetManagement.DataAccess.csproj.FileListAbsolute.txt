@@ -1,0 +1,17 @@
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.DataAccess.deps.json
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.DataAccess.runtimeconfig.json
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.DataAccess.dll
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.DataAccess.pdb
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.Models.dll
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\bin\Debug\net8.0\AssetManagement.Models.pdb
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.csproj.AssemblyReference.cache
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.AssemblyInfoInputs.cache
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.AssemblyInfo.cs
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.csproj.CoreCompileInputs.cache
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetMan.BCD29E66.Up2Date
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.dll
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\refint\AssetManagement.DataAccess.dll
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.pdb
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\AssetManagement.DataAccess.genruntimeconfig.cache
+C:\Projects\AssetManagementApp\AssetManagement.DataAccess\obj\Debug\net8.0\ref\AssetManagement.DataAccess.dll
